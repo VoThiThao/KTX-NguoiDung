@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Models.EF.NGUOIDUNG>
+
+@{
+    ViewBag.Title = "Quản lý người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section header{
+   <i class="fa fa-user"></i> Quản lý người dùng
+    }
+
+@using (Html.BeginForm())
+{ 
+    <div class="col-lg-12 form-group">
+        <div class="col-md-6">
+            <p>
+                @Html.ActionLink("Tạo mới", "Create", "NguoiDung", new { @class = "btn btn-danger" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <input type="text" value="@ViewBag.SearchString" name="searchString" placeholder="Nhập từ khoá tìm kiếm" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Tìm kiếm" class="btn btn-default" />
+        </div>
+    </div>
+}
+<div class="col-lg-12 form-group">
+    <table class="table">
+        <tr>
+            <th>STT</th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenDangNhap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatKhau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaNV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoTenNV)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChucVu)
+            </th>
+            <th></th>
+        </tr>
+        @{var i = 1;}
+        @foreach (var item in Model)
+        {
+            <tr >
+                <td>
+                    @i
+                </td>
+
+                <td>
+                    @item.TenDangNhap
+                </td>
+                <td>
+                    @item.MatKhau
+                </td>
+                <td>
+                    @item.MaNV
+                </td>
+                <td>
+                    @item.HoTenNV
+                </td>
+                <td>
+                    @item.ChucVu
+                </td>
+                
+                
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new {@item.TenDangNhap})|
+                    @Ajax.ActionLink("Xoá", "Delete", new { @TenDangNhap = item.TenDangNhap}, new AjaxOptions
+                    {
+                        Confirm = "Bạn có muốn xoá thông tin này",
+                   //     OnComplete="$('#row_"+item.TenDangNhap+"').remove()",
+                       // HttpMethod="Delete"
+                    })
+                    
+                 </td>   
+            </tr>
+            i++;
+        }
+
+    </table>
+</div>
